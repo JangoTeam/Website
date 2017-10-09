@@ -1,0 +1,24 @@
+RewriteEngine On
+
+# Evitando listagem de diretórios..
+Options -Indexes
+
+# Protegendo arquivo .htaccess
+<files ~ "^.*\.([Hh][Tt][Aa])">
+    order allow,deny
+    deny from all
+    satisfy all
+</files>
+
+# Not memory
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Arquivo ou diretorio não encontrado..
+ErrorDocument 403 403
+ErrorDocument 404 404
+# Reescrita de ERROR
+RewriteRule ^403$ public/index.php?e=403
+RewriteRule ^404$ public/index.php?e=404
+
+RewriteRule ^$ public/index.php
